@@ -32,6 +32,15 @@ class DataProcessor:
             return 'Cable'
         else:
             return row['equipment_type']
+        
+    def generate_unique_id(self, df):
+        df['row_id'] = (
+            df['start_time'].dt.strftime('%d%m%Y') + '_' +
+            df['exercise_title'].str.lower().str.replace(r'\s+', '', regex=True) + '_' +
+            df['set_index'].astype(str)
+        )
+        return df
+
 
     def process_routines(self, routines_data):
         # Process routines data into a cleaned DataFrame 
@@ -131,5 +140,7 @@ class DataProcessor:
         df['equipment_type'] = df.apply(self._assign_equipment_type, axis=1)
 
         df['workout_plan'] = df['workout_title'].str.split(' ').str[0]
+
+        df = self.generate_unique_id(df)
 
         return df

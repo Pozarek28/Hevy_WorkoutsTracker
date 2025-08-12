@@ -1,9 +1,11 @@
 from src.api_client import get_data, BASE_URL_WORKOUTS, BASE_URL_ROUTINES
 from src.data_processor import DataProcessor
+from src.supabase_handler import SupabaseHandler
 
 def main():
 
     processor = DataProcessor()
+    supabase_handler = SupabaseHandler()
 
     # Get workouts data
     workouts_data = get_data(BASE_URL_WORKOUTS)
@@ -13,5 +15,8 @@ def main():
     routines_data = get_data(BASE_URL_ROUTINES)
     df_routines = processor.process_routines(routines_data)
 
-if __name__ == "__main__":
+    supabase_handler.append_unique(df_workouts, 'workouts')
+    supabase_handler.overwrite_table(df_routines, 'routines')
+
+if __name__ == '__main__':
     main()
