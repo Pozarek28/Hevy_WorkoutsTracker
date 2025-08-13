@@ -76,7 +76,7 @@ class DataProcessor:
         df[['exercise_title', 'equipment_type']] = df['exercise_title'].apply(
             lambda x: pd.Series(self._clean_exercise_title(x))
         )
-        df['equipment_type'] = df.apply(self._assign_equipment_type, axis=1)
+        #df['equipment_type'] = df.apply(self._assign_equipment_type, axis=1)
 
         # Format date columns
         df[['created_at', 'updated_at']] = df[['created_at', 'updated_at']].apply(pd.to_datetime)
@@ -137,7 +137,7 @@ class DataProcessor:
         df[['exercise_title', 'equipment_type']] = df['exercise_title'].apply(
             lambda x: pd.Series(self._clean_exercise_title(x))
         )
-        df['equipment_type'] = df.apply(self._assign_equipment_type, axis=1)
+        #df['equipment_type'] = df.apply(self._assign_equipment_type, axis=1)
 
         df['workout_plan'] = df['workout_title'].str.split(' ').str[0]
 
